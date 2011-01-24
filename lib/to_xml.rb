@@ -1,3 +1,5 @@
+require 'to_xml/version'
+
 class Object
   def self.xml_type
     name.gsub(/([a-z])([A-Z])/,'\1-\2').downcase
@@ -20,8 +22,8 @@ class Integer
 end
 
 class Array
-  def to_xml
-    map{|n|n.to_xml}.join
+  def to_xml( array_name = :array, item_name = :item )
+    %|<#{array_name} size="#{self.size}">|+map{|n|n.to_xml( :item )}.join+"</#{array_name}>"
   end
 end
 
